@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@500;600;700&display=swap");
 
 html {
     scroll-behavior: smooth;
@@ -6,68 +6,24 @@ html {
 
 body {
     background-image: url(../img/bg-vaksin.png);
-    font-family: 'Poppins',
+    font-family: 'Open Sans',
     sans-serif;
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
 }
-h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 800px;
-}
-.center {
-    display: flex;
-    justify-content: center;
-}
-
 .logo-cust {
     width: 60% !important;
-    margin-top: 40px;
-    margin-bottom: 10px;
 }
-
-.card {
-    width: 450px;
-    height: 40rem;
-    margin-top: 10px;
-    border-radius: 20px;
+.form-floating {
     position: relative;
-    box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
 }
-
-.btn {
-    border-radius: 15px !important;
+.form-control {
+    border-radius: 20px !important;
 }
-
-.info-vaksin {
-    margin-top: 50px;
-    color: #168522;
+.main-card {
+    border-radius: 30px !important;
 }
-
-
 /* Desktop */
 @media screen and (min-width: 968px) {
     .logo-cust {
-        width: 50% !important;
-        margin-top: 30px;
-        margin-bottom: 15px;
-    }
-    .card {
-        width: 650px;
-        height: 40rem;
-        margin-top: 10px;
-        border-radius: 20px;
-        position: relative;
-        box-shadow: 0 2px 5px 0 rgb(0 0 0 / 16%), 0 2px 10px 0 rgb(0 0 0 / 12%);
-    }
-
-    .info-vaksin {
-        margin-top: 120px;
-        color: #168522;
-    }
-
-    .form-control {
-        border-radius: 30px !important;
+        width: 40% !important;
     }
 }

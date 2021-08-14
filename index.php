@@ -1,6 +1,7 @@
 <?php
 session_start();
 require_once('config/db.php');
+include_once(BASE_PATH . '/alert.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -16,11 +17,9 @@ require_once('config/db.php');
   <link href="<?= BASE_URL ?>/css/sb-bootstrap.css" rel="stylesheet" />
   <script src="<?= BASE_URL ?>/js/bootstrap.bundle.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link href="css/main.css" rel="stylesheet" />
+  <link href="<?= BASE_URL ?>/css/main.css" rel="stylesheet" />
 
 </head>
-
-<?php include_once(BASE_PATH . '/alert.php'); ?>
 
 <body>
   <script type="text/javascript">
