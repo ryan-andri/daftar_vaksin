@@ -8,8 +8,8 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Admin Vaksin</title>
-    <link href="<?= BASE_URL ?>/css/sb-bootstrap.css" rel="stylesheet" />
-    <script src="<?= BASE_URL ?>/js/all.min.js"></script>
+    <link href="<?= BASE_URL ?>/panel/css/sb-bootstrap.css" rel="stylesheet" />
+    <script src="<?= BASE_URL ?>/panel/js/all.min.js"></script>
 </head>
 
 <body class="sb-nav-fixed">

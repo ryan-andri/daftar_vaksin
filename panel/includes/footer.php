@@ -6,8 +6,8 @@
 </footer>
 </div>
 </div>
-<script src="<?= BASE_URL ?>/js/bootstrap.bundle.min.js"></script>
-<script src="<?= BASE_URL ?>/js/scripts.js"></script>
+<script src="<?= BASE_URL ?>/panel/js/bootstrap.bundle.min.js"></script>
+<script src="<?= BASE_URL ?>/panel/js/scripts.js"></script>
 </body>
 
 </html>

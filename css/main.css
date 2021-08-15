@@ -7,20 +7,26 @@ html {
 body {
     background-image: url(../img/bg-vaksin.png);
     font-family: 'Open Sans',
-    sans-serif;
+        sans-serif;
 }
+
 .logo-cust {
     width: 60% !important;
 }
+
 .form-floating {
     position: relative;
 }
-.form-control {
+
+.form-control,
+.form-select {
     border-radius: 20px !important;
 }
+
 .main-card {
     border-radius: 30px !important;
 }
+
 /* Desktop */
 @media screen and (min-width: 968px) {
     .logo-cust {

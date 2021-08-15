@@ -13,8 +13,7 @@ require_once('../config/db.php');
     <meta name="description" content="" />
     <meta name="author" content="" />
     <title>Admin Vaksin</title>
-    <link href="<?= BASE_URL ?>/css/sb-bootstrap.css" rel="stylesheet" />
-    <link href="<?= BASE_URL ?>/css/main.css" rel="stylesheet" />
+    <link href="<?= BASE_URL ?>/panel/css/sb-bootstrap.css" rel="stylesheet" />
 </head>
 
 <body class="bg-custom-login">

@@ -1,6 +1,34 @@
 <?php
 session_start();
 require_once('config/db.php');
+
+// ambil tanggal dari server langsung aja boi xD
+$currentDate = new DateTime("now", new DateTimeZone("Asia/Jakarta"));
+$curr_day = $currentDate->format('N');
+if ($curr_day == 5) {
+  // jum'at lompat 3 hari ke senin
+  $cd = date('Y-m-d', strtotime('now +3 day'));
+} else if ($curr_day == 6) {
+  // sabtu lompat 2 hari ke senin
+  $cd = date('Y-m-d', strtotime('now +2 day'));
+} else {
+  $cd = date('Y-m-d', strtotime('now +1 day'));
+}
+
+if (isset($_POST['cek_vaksin'])) {
+  $tgl = filter_input(INPUT_POST, 'tgl_target');
+  $vaks = filter_input(INPUT_POST, 'vaksin_ke');
+  $db = dbInstance();
+  $db->where("tgl_vaksin", $tgl);
+  if ($db->getValue("pendaftar", "count(*)") >= 100) {
+    $_SESSION['quota_habis'] = true;
+  } else {
+    $_SESSION['tgl_vaksin'] = $tgl;
+    $_SESSION['vaksin_ke'] = $vaks;
+    header('location: daftarvaksin');
+    exit();
+  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,8 +41,8 @@ require_once('config/db.php');
   <!-- ============ CDN FontAwesome ================= -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <!-- ============ Bootstrap 5 ===================== -->
-  <link href="<?= BASE_URL ?>/css/sb-bootstrap.css" rel="stylesheet" />
-  <script src="<?= BASE_URL ?>/js/bootstrap.bundle.min.js"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   <!-- ============ Sweet Alert 2 =================== -->
   <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <!-- ============ Main CSS ======================== -->
@@ -22,6 +50,17 @@ require_once('config/db.php');
 </head>
 
 <body>
+  <?php
+  if (isset($_SESSION['quota_habis'])) { ?>
+    <script type="text/javascript">
+      Swal.fire({
+        icon: 'error',
+        title: 'Kuota Habis!',
+        text: 'Silahkan cek pada hari berikutnya.'
+      })
+    </script>
+  <?php unset($_SESSION['quota_habis']);
+  } ?>
   <main>
     <div class="container">
       <div class="row justify-content-center">
@@ -31,15 +70,15 @@ require_once('config/db.php');
               <img class="logo-cust" src="<?= BASE_URL ?>/img/rumkit-nama.png" alt="">
             </div>
             <div class="card-body text-center mt-3">
-              <div class="judul text-center">
+              <div>
                 <h5>KETERSEDIAAN VAKSIN</h5>
                 <h5><strong>COVID - 19</strong></h5>
               </div>
-              <form action="" method="post" class="mt-5">
+              <form method="post" class="mt-5">
                 <div class="row justify-content-center">
                   <div class="col-lg-6">
                     <label class="form-label" for="tgl_target"><strong>Pelaksanaan Vaksin</strong></label>
-                    <input type="date" name="tgl_target" class="form-control" placeholder="Tanggal Ingin Vaksin">
+                    <input class="form-control" type="date" min="<?= $cd; ?>" max="<?= $cd; ?>" name="tgl_target" id="tgl_target" required>
                   </div>
                 </div>
                 <div class="row justify-content-center mt-4">
@@ -47,18 +86,18 @@ require_once('config/db.php');
                     <label class="form-label" for="tgl_target"><strong>Vaksin Ke :</strong></label>
                     <br>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-                      <label class="form-check-label" for="inlineRadio1">Pertama</label>
+                      <input class="form-check-input" type="radio" name="vaksin_ke" value="1" required>
+                      <label class="form-check-label" for="vaksin_ke">Pertama</label>
                     </div>
                     <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-                      <label class="form-check-label" for="inlineRadio2">Kedua</label>
+                      <input class="form-check-input" type="radio" name="vaksin_ke" value="2" required>
+                      <label class="form-check-label" for="vaksin_ke">Kedua</label>
                     </div>
                   </div>
                 </div>
                 <div class="row justify-content-center mt-4">
                   <div class="col-md-6">
-                    <a href="daftarvaksin2.php" type="submit" class="btn btn-success"><i class="fas fa-search fa-sm"></i> Cek Ketersediaan</a>
+                    <button type="submit" name="cek_vaksin" class="btn btn-success"><i class="fas fa-search fa-sm"></i> Cek Ketersediaan</button>
                   </div>
                 </div>
               </form>
@@ -88,43 +127,6 @@ require_once('config/db.php');
       </div>
     </div>
   </main>
-
-
-  <script>
-    function trigger(id, disable) {
-      var ids = document.getElementById(id);
-      if (!disable) {
-        ids.value = ids.value.replace(/[^0-9]/gi, "");
-        return;
-      }
-      var v1 = document.getElementById("tgl_vaksin_1");
-      var v2 = document.getElementById("tgl_vaksin_2");
-      switch (ids.value) {
-        case "":
-        case "satu":
-          v1.disabled = true;
-          v1.required = false;
-          v2.disabled = true;
-          v2.required = false;
-          break;
-        case "dua":
-          v1.disabled = false;
-          v1.required = true;
-          v2.disabled = true;
-          v2.required = false;
-          break;
-        case "tiga":
-          v1.disabled = false;
-          v1.required = true;
-          v2.disabled = false;
-          v2.required = true;
-          break;
-      }
-      // bersihkan nilai setiap trigger
-      v1.value = null;
-      v2.value = null;
-    }
-  </script>
 </body>
 
 </html>
